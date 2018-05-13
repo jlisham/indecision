@@ -5,7 +5,7 @@ class IndecisionApp extends React.Component {
     this.selOption = this.selOption.bind(this);
     this.addOptions = this.addOptions.bind(this);
     this.state = {
-      options: []
+      options: props.options
     };
   }
   delOptions() {
@@ -29,11 +29,9 @@ class IndecisionApp extends React.Component {
     });
   }
   render() {
-    const title = "Indecision";
-    const subTitle = "silly lil app...";
     return (
       <div>
-        <Header title={title} subTitle={subTitle} />
+        <Header subTitle="silly lil app..." />
         <Action
           hasOptions={this.state.options.length > 0}
           selOption={this.selOption}
@@ -42,53 +40,6 @@ class IndecisionApp extends React.Component {
         <AddOption addOptions={this.addOptions} />
       </div>
     );
-  }
-}
-
-class Header extends React.Component {
-  render() {
-    return (
-      <div>
-        <h1>{this.props.title}</h1>
-        <h2>{this.props.subTitle}</h2>
-      </div>
-    );
-  }
-}
-
-class Action extends React.Component {
-  render() {
-    return (
-      <div>
-        <button
-          disabled={!this.props.hasOptions}
-          onClick={this.props.selOption}
-        >
-          what should i do?
-        </button>
-      </div>
-    );
-  }
-}
-
-class Options extends React.Component {
-  render() {
-    return (
-      <div>
-        <ol>
-          {this.props.options.map(option => (
-            <Option key={option} optionText={option} />
-          ))}
-        </ol>
-        <button onClick={this.props.delOptions}>clear options</button>
-      </div>
-    );
-  }
-}
-
-class Option extends React.Component {
-  render() {
-    return <li>{this.props.optionText}</li>;
   }
 }
 
@@ -121,5 +72,59 @@ class AddOption extends React.Component {
     );
   }
 }
+
+const Header = props => {
+  return (
+    <div>
+      <h1>{props.title}</h1>
+      {props.subTitle && <h2>{props.subTitle}</h2>}
+    </div>
+  );
+};
+
+const Action = props => {
+  return (
+    <div>
+      <button disabled={!props.hasOptions} onClick={props.selOption}>
+        what should i do?
+      </button>
+    </div>
+  );
+};
+
+const Options = props => {
+  return (
+    <div>
+      <ol>
+        {props.options.map(option => (
+          <Option key={option} optionText={option} />
+        ))}
+      </ol>
+      {props.options.length > 0 && (
+        <button onClick={props.delOptions}>clear options</button>
+      )}
+    </div>
+  );
+};
+
+const Option = props => {
+  return <li>{props.optionText}</li>;
+};
+
+const User = props => {
+  return (
+    <div>
+      <p>name: {props.name}</p>
+      <p>age: {props.age}</p>
+    </div>
+  );
+};
+
+Header.defaultProps = {
+  title: "Indecision",
+  subTitle: undefined
+};
+
+IndecisionApp.defaultProps = { options: [] };
 
 ReactDOM.render(<IndecisionApp />, document.getElementById("app"));
