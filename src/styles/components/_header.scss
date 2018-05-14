@@ -1,0 +1,15 @@
+.header {
+  background: $bg-primary;
+  color: white;
+  margin-bottom: 4.8rem;
+  padding: $med 0;
+}
+.header__title {
+  font-size: $lrg;
+  margin: 0;
+}
+.header__subtitle {
+  color: $pg_txt-primary;
+  font-size: $med;
+  font-weight: normal;
+}

@@ -3,8 +3,19 @@ import Option from "./Option";
 
 const Options = props => (
   <div>
-    <ul>
-      {props.options.length === 0 && <li>no options yet - add the first!</li>}
+    <div className="widget-header">
+      <h3>Your Options</h3>
+
+      <button
+        disabled={props.options.length === 0}
+        className="button button--link"
+        onClick={props.delOptions}
+      >
+        clear options
+      </button>
+    </div>
+    <div className="widget-content">
+      {props.options.length === 0 && <em>no options yet - add the first!</em>}
       {props.options &&
         props.options.map(option => (
           <Option
@@ -13,10 +24,7 @@ const Options = props => (
             delOneOption={props.delOneOption}
           />
         ))}
-    </ul>
-    {props.options.length > 0 && (
-      <button onClick={props.delOptions}>clear options</button>
-    )}
+    </div>
   </div>
 );
 

@@ -1,0 +1,35 @@
+.button {
+  background: darken($bg-secondary, 10%);
+  border-bottom: 0.3rem solid darken($bg-secondary, 25%);
+  font-weight: 500;
+  cursor: pointer;
+  border: none;
+  color: white;
+  padding: $sm;
+}
+.button:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+.button:hover {
+  background: lighten($bg-secondary, 5%);
+}
+.button-big {
+  border-bottom-width: 0.6rem;
+  font-weight: bolder;
+  font-size: $lrg;
+  width: 100%;
+  margin-bottom: $x-lrg;
+  padding: 2.4rem;
+}
+.button--link {
+  background: none;
+  border: none;
+  color: lighten($pg_txt-primary, 30%);
+  padding: 0;
+}
+.button--link:hover {
+  cursor: pointer;
+  background: none;
+  color: lighten($pg_txt-primary, 75%);
+}

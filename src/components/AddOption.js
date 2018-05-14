@@ -17,11 +17,11 @@ export default class AddOption extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="widget-inputForm">
         {this.state.err && <p>{this.state.err}</p>}
         <form onSubmit={this.saveNewOpt}>
-          <input autoFocus type="text" name="option" />
-          <button>add option</button>
+          <input autoFocus type="text" className="input" name="option" />
+          <button className="button">add option</button>
         </form>
       </div>
     );
