@@ -17,6 +17,7 @@ var IndecisionApp = function (_React$Component) {
     var _this = _possibleConstructorReturn(this, (IndecisionApp.__proto__ || Object.getPrototypeOf(IndecisionApp)).call(this, props));
 
     _this.delOptions = _this.delOptions.bind(_this);
+    _this.delOneOption = _this.delOneOption.bind(_this);
     _this.selOption = _this.selOption.bind(_this);
     _this.addOptions = _this.addOptions.bind(_this);
     _this.state = {
@@ -26,10 +27,47 @@ var IndecisionApp = function (_React$Component) {
   }
 
   _createClass(IndecisionApp, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      try {
+        var json = localStorage.getItem("options");
+        var options = JSON.parse(json);
+        if (options) {
+          this.setState(function () {
+            return { options: options };
+          });
+        }
+      } catch (e) {}
+    }
+  }, {
+    key: "componentDidUpdate",
+    value: function componentDidUpdate(prevProps, prevState) {
+      if (prevProps.options.length !== prevState.options.length) {
+        var json = JSON.stringify(this.state.options);
+        localStorage.setItem("options", json);
+      }
+    }
+  }, {
+    key: "componentWillUnmount",
+    value: function componentWillUnmount() {
+      console.log("will unmount");
+    }
+  }, {
     key: "delOptions",
     value: function delOptions() {
       this.setState(function () {
         return { options: [] };
+      });
+    }
+  }, {
+    key: "delOneOption",
+    value: function delOneOption(option2Del) {
+      this.setState(function (prevState) {
+        return {
+          options: prevState.options.filter(function (option) {
+            return option2Del !== option;
+          })
+        };
       });
     }
   }, {
@@ -62,7 +100,11 @@ var IndecisionApp = function (_React$Component) {
           hasOptions: this.state.options.length > 0,
           selOption: this.selOption
         }),
-        React.createElement(Options, { options: this.state.options, delOptions: this.delOptions }),
+        React.createElement(Options, {
+          options: this.state.options,
+          delOptions: this.delOptions,
+          delOneOption: this.delOneOption
+        }),
         React.createElement(AddOption, { addOptions: this.addOptions })
       );
     }
@@ -95,7 +137,9 @@ var AddOption = function (_React$Component2) {
       this.setState(function () {
         return { err: err };
       });
-      e.target.elements.option.value = "";
+      if (!err) {
+        e.target.elements.option.value = "";
+      }
     }
   }, {
     key: "render",
@@ -111,7 +155,7 @@ var AddOption = function (_React$Component2) {
         React.createElement(
           "form",
           { onSubmit: this.saveNewOpt },
-          React.createElement("input", { type: "text", name: "option" }),
+          React.createElement("input", { autoFocus: true, type: "text", name: "option" }),
           React.createElement(
             "button",
             null,
@@ -159,10 +203,19 @@ var Options = function Options(props) {
     "div",
     null,
     React.createElement(
-      "ol",
+      "ul",
       null,
-      props.options.map(function (option) {
-        return React.createElement(Option, { key: option, optionText: option });
+      props.options.length === 0 && React.createElement(
+        "li",
+        null,
+        "no options yet - add the first!"
+      ),
+      props.options && props.options.map(function (option) {
+        return React.createElement(Option, {
+          key: option,
+          optionText: option,
+          delOneOption: props.delOneOption
+        });
       })
     ),
     props.options.length > 0 && React.createElement(
@@ -177,7 +230,19 @@ var Option = function Option(props) {
   return React.createElement(
     "li",
     null,
-    props.optionText
+    props.optionText,
+    " ",
+    React.createElement(
+      "button",
+      {
+        onClick: function onClick(e) {
+          props.delOneOption(props.optionText);
+        }
+      },
+      " ",
+      "X",
+      " "
+    )
   );
 };
 

@@ -2,16 +2,40 @@ class IndecisionApp extends React.Component {
   constructor(props) {
     super(props);
     this.delOptions = this.delOptions.bind(this);
+    this.delOneOption = this.delOneOption.bind(this);
     this.selOption = this.selOption.bind(this);
     this.addOptions = this.addOptions.bind(this);
     this.state = {
       options: props.options
     };
   }
+
+  componentDidMount() {
+    try {
+      const json = localStorage.getItem("options");
+      const options = JSON.parse(json);
+      if (options) {
+        this.setState(() => ({ options }));
+      }
+    } catch (e) {}
+  }
+  componentDidUpdate(prevProps, prevState) {
+    if (prevProps.options.length !== prevState.options.length) {
+      const json = JSON.stringify(this.state.options);
+      localStorage.setItem("options", json);
+    }
+  }
+  componentWillUnmount() {
+    console.log("will unmount");
+  }
+
   delOptions() {
-    this.setState(() => {
-      return { options: [] };
-    });
+    this.setState(() => ({ options: [] }));
+  }
+  delOneOption(option2Del) {
+    this.setState(prevState => ({
+      options: prevState.options.filter(option => option2Del !== option)
+    }));
   }
   selOption() {
     const randNum = Math.floor(Math.random() * this.state.options.length);
@@ -24,9 +48,7 @@ class IndecisionApp extends React.Component {
     } else if (this.state.options.indexOf(option) > -1) {
       return "option already exists";
     }
-    this.setState(prevState => {
-      return { options: prevState.options.concat(option) };
-    });
+    this.setState(prevState => ({ options: prevState.options.concat(option) }));
   }
   render() {
     return (
@@ -36,7 +58,11 @@ class IndecisionApp extends React.Component {
           hasOptions={this.state.options.length > 0}
           selOption={this.selOption}
         />
-        <Options options={this.state.options} delOptions={this.delOptions} />
+        <Options
+          options={this.state.options}
+          delOptions={this.delOptions}
+          delOneOption={this.delOneOption}
+        />
         <AddOption addOptions={this.addOptions} />
       </div>
     );
@@ -55,17 +81,17 @@ class AddOption extends React.Component {
     e.preventDefault();
     const opt = e.target.elements.option.value.trim();
     const err = this.props.addOptions(opt);
-    this.setState(() => {
-      return { err };
-    });
-    e.target.elements.option.value = "";
+    this.setState(() => ({ err }));
+    if (!err) {
+      e.target.elements.option.value = "";
+    }
   }
   render() {
     return (
       <div>
         {this.state.err && <p>{this.state.err}</p>}
         <form onSubmit={this.saveNewOpt}>
-          <input type="text" name="option" />
+          <input autoFocus type="text" name="option" />
           <button>add option</button>
         </form>
       </div>
@@ -95,11 +121,17 @@ const Action = props => {
 const Options = props => {
   return (
     <div>
-      <ol>
-        {props.options.map(option => (
-          <Option key={option} optionText={option} />
-        ))}
-      </ol>
+      <ul>
+        {props.options.length === 0 && <li>no options yet - add the first!</li>}
+        {props.options &&
+          props.options.map(option => (
+            <Option
+              key={option}
+              optionText={option}
+              delOneOption={props.delOneOption}
+            />
+          ))}
+      </ul>
       {props.options.length > 0 && (
         <button onClick={props.delOptions}>clear options</button>
       )}
@@ -108,7 +140,19 @@ const Options = props => {
 };
 
 const Option = props => {
-  return <li>{props.optionText}</li>;
+  return (
+    <li>
+      {props.optionText}{" "}
+      <button
+        onClick={e => {
+          props.delOneOption(props.optionText);
+        }}
+      >
+        {" "}
+        X{" "}
+      </button>
+    </li>
+  );
 };
 
 const User = props => {
