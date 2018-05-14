@@ -4,8 +4,29 @@
   "main": "index.js",
   "author": "jlisham",
   "license": "MIT",
+  "scripts": {
+    "server": "live-server --port=3000 public/",
+    "build": "webpack --watch",
+    "dev": "webpack-dev-server",
+    "counter": "babel playground/counter.js --out-file=public/scripts/app.js --presets=env,react --watch",
+    "visiblity": "babel playground/visibility.js --out-file=public/scripts/app.js --presets=env,react --watch"
+  },
   "dependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.3",
+    "babel-loader": "^7.1.4",
+    "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-preset-env": "^1.7.0",
-    "babel-preset-react": "^6.24.1"
+    "babel-preset-react": "^6.24.1",
+    "live-server": "^1.2.0",
+    "react": "^16.3.2",
+    "react-dom": "^16.3.2",
+    "react-modal": "^3.4.4",
+    "validator": "^10.2.0",
+    "webpack": "^4.8.3",
+    "webpack-dev-server": "^3.1.4"
+  },
+  "devDependencies": {
+    "webpack-cli": "^2.1.3"
   }
 }
