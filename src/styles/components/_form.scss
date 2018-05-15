@@ -16,7 +16,7 @@
   padding: 1rem;
   margin: 0 0 $sm 0;
 }
-@media (min-width: 45rem) {
+@media (min-width: $breakPt) {
   .inputForm {
     flex-direction: row;
   }
