@@ -17,10 +17,11 @@ const Options = props => (
     <div className="widget-content">
       {props.options.length === 0 && <em>no options yet - add the first!</em>}
       {props.options &&
-        props.options.map(option => (
+        props.options.map((option, index) => (
           <Option
             key={option}
             optionText={option}
+            count={index + 1}
             delOneOption={props.delOneOption}
           />
         ))}

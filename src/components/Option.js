@@ -1,8 +1,8 @@
 import React from "react";
 
 const Option = props => (
-  <p>
-    {props.optionText}{" "}
+  <p className="option">
+    {props.count}. {props.optionText}{" "}
     <button
       className="button button--link header-subtitle"
       onClick={e => {

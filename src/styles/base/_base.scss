@@ -14,3 +14,10 @@ body {
   font-size: $sm;
   background: $bgColor;
 }
+.err {
+  color: darkred;
+  font-style: italic;
+  margin: 1rem;
+  text-shadow: white;
+  font-weight: bolder;
+}

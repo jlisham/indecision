@@ -13,21 +13,17 @@
 .widget-content {
   color: lighten($pg_txt-primary, 40%);
   font-weight: bolder;
-  padding: $lrg;
+  padding: $med;
   text-align: center;
 }
-.widget-content p {
+.widget-content .option {
+  border-bottom: solid 1px lighten($bgColor, 20%);
+  padding-bottom: 2rem;
+  margin-top: 2rem;
   text-align: left;
   display: flex;
   justify-content: space-between;
 }
-.widget-inputForm .input {
-  width: 77%;
-  background: $bgColor;
-  color: antiquewhite;
-  border: solid 1px darken($bgColor, 15%);
-  border-width: 0 0 1px 0;
-  height: 3.8rem;
-  padding: 1rem;
-  margin: 0 1.5rem 1rem 1.5rem;
+.widget-content .option:last-child {
+  border-bottom: none;
 }
