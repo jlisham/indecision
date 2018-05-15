@@ -23,6 +23,7 @@
   text-align: left;
   display: flex;
   justify-content: space-between;
+  word-break: break-all;
 }
 .widget-content .option:last-child {
   border-bottom: none;

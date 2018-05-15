@@ -3,14 +3,24 @@
   margin: 0 auto;
   border-top: solid 1px lighten($bgColor, 20%);
   padding-top: 1.5rem;
+  display: flex;
+  flex-direction: column;
 }
 .inputForm .input {
-  width: 77%;
+  flex-grow: 1;
   background: $bgColor;
   color: antiquewhite;
   border: solid 1px darken($bgColor, 15%);
   border-width: 0 0 1px 0;
   height: 3.8rem;
   padding: 1rem;
-  margin: 0 1.5rem 1rem 1.5rem;
+  margin: 0 0 $sm 0;
+}
+@media (min-width: 45rem) {
+  .inputForm {
+    flex-direction: row;
+  }
+  .inputForm .input {
+    margin: 0 1.5rem 1rem 1.5rem;
+  }
 }

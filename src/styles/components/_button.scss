@@ -6,6 +6,8 @@
   border: none;
   color: white;
   padding: $sm;
+  word-break: normal;
+  margin-bottom: $sm;
 }
 .button:disabled {
   opacity: 0.5;
@@ -19,7 +21,7 @@
   font-weight: bolder;
   font-size: $lrg;
   width: 100%;
-  margin-bottom: $x-lrg;
+  margin-bottom: $med;
   padding: 2.4rem;
 }
 .button--link {
