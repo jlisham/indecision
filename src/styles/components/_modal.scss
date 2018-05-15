@@ -16,7 +16,7 @@
 .modal {
   background: $bg-widget;
   color: white;
-  min-width: 15rem;
+  min-width: 20rem;
   max-width: 30rem;
   outline: none;
   text-align: center;
@@ -33,7 +33,6 @@
   margin: 0;
 }
 .modal article {
-  text-align: left;
   padding: 1rem 1.5rem;
   font-size: $med;
   margin: 0 0 $lrg 0;
